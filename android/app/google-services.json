@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "703165572636",
+    "project_id": "daawyenta-f769e",
+    "storage_bucket": "daawyenta-f769e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:703165572636:android:02341a7c9f2de3c748a1d9",
+        "android_client_info": {
+          "package_name": "com.example.daawyenta"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "703165572636-08me98sqjpo3qreee9ji53d77i3bot2i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv-z1rxbx6efK6JAyhf1C3lIgUWppAZQc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "703165572636-08me98sqjpo3qreee9ji53d77i3bot2i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
