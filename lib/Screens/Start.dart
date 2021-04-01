@@ -22,7 +22,6 @@ class _startState extends State<start> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: ModalProgressHUD(
         inAsyncCall: showspinner,

@@ -41,7 +41,6 @@ class _signup2State extends State<signup2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: ListView(
         children:[ Column(children:[

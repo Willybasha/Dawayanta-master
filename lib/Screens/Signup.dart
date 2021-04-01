@@ -63,7 +63,6 @@ class _signupState extends State<signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
