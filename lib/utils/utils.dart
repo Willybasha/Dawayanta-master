@@ -4,6 +4,7 @@ import 'package:image/image.dart' as Im;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:meta/meta.dart';
+import 'package:path_provider/path_provider.dart';
 
 
 class Utils {
@@ -26,7 +27,7 @@ class Utils {
   }
 
   static Future<File> compressImage(File imageToCompress) async {
-    final tempDir = await getTemporaryDirectory();
+    final Directory tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
     int rand = Random().nextInt(10000);
 

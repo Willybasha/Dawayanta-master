@@ -24,8 +24,8 @@ class FirebaseMethods {
   //user class
   KUser user = KUser();
 
-  Future<FirebaseUser> getCurrentUser() async {
-    FirebaseUser currentUser;
+  Future<User> getCurrentUser() async {
+    User currentUser;
     currentUser = await _auth.currentUser;
     return currentUser;
   }
@@ -39,39 +39,39 @@ class FirebaseMethods {
     return KUser.fromMap(documentSnapshot.data());
   }
 
-  Future<FirebaseUser> signIn() async {
+  Future<User> signIn() async {
     GoogleSignInAccount _signInAccount = await _googleSignIn.signIn();
     GoogleSignInAuthentication _signInAuthentication =
     await _signInAccount.authentication;
 
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: _signInAuthentication.accessToken,
         idToken: _signInAuthentication.idToken);
 
-    FirebaseUser user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
+    User user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
     return user;
   }
 
-  Future<bool> authenticateUser(FirebaseUser user) async {
+  Future<bool> authenticateUser(User user) async {
     QuerySnapshot result = await firestore
         .collection(USERS_COLLECTION)
         .where(EMAIL_FIELD, isEqualTo: user.email)
-        .getDocuments();
+        .get();
 
-    final List<DocumentSnapshot> docs = result.documents;
+    final List<DocumentSnapshot> docs = result.docs;
 
     //if user is registered then length of list > 0 or else less than 0
     return docs.length == 0 ? true : false;
   }
 
-  Future<void> addDataToDb(FirebaseUser currentUser) async {
+  Future<void> addDataToDb(User currentUser) async {
     String username = Utils.getUsername(currentUser.email);
 
     user = KUser(
         uid: currentUser.uid,
         email: currentUser.email,
         name: currentUser.displayName,
-        profilePhoto: currentUser.photoUrl,
+        profilePhoto: currentUser.photoURL,
         username: username);
 
     firestore
@@ -89,7 +89,7 @@ class FirebaseMethods {
     List<KUser> userList = List<KUser>();
 
     QuerySnapshot querySnapshot =
-    await firestore.collection(USERS_COLLECTION).getDocuments();
+    await firestore.collection(USERS_COLLECTION).get();
     for (var i = 0; i < querySnapshot.docs.length; i++) {
       if (querySnapshot.docs[i].id != currentUser.uid) {
         userList.add(KUser.fromMap(querySnapshot.docs[i].data()));
@@ -157,7 +157,7 @@ class FirebaseMethods {
 
     firestore
         .collection(MESSAGES_COLLECTION)
-        .document(message.receiverId)
+        .doc(message.receiverId)
         .collection(message.senderId)
         .add(map);
   }

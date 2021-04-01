@@ -34,6 +34,8 @@ dependencies:
   firebase_storage:
   image_picker:
   image: ^3.0.2
+  path_provider:
+
 
 
 
