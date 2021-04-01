@@ -1,5 +1,7 @@
 import 'dart:io';
-
+import 'package:daawyenta/provider/image_upload_provider.dart';
+import 'package:daawyenta/utils/utils.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,17 +12,17 @@ import '../constants.dart';
 class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   GoogleSignIn _googleSignIn = GoogleSignIn();
-  static final Firestore firestore = Firestore.instance;
+  static final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static final CollectionReference _userCollection =
   _firestore.collection(USERS_COLLECTION);
 
-  static final Firestore _firestore = Firestore.instance;
+  static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // StorageReference _storageReference;
 
   //user class
-  User user = User();
+  KUser user = KUser();
 
   Future<FirebaseUser> getCurrentUser() async {
     FirebaseUser currentUser;
@@ -28,13 +30,13 @@ class FirebaseMethods {
     return currentUser;
   }
 
-  Future<User> getUserDetails() async {
-    FirebaseUser currentUser = await getCurrentUser();
+  Future<KUser> getUserDetails() async {
+    User currentUser = await getCurrentUser();
 
     DocumentSnapshot documentSnapshot =
-    await _userCollection.document(currentUser.uid).get();
+    await _userCollection.doc(currentUser.uid).get();
 
-    return User.fromMap(documentSnapshot.data);
+    return KUser.fromMap(documentSnapshot.data());
   }
 
   Future<FirebaseUser> signIn() async {
@@ -65,7 +67,7 @@ class FirebaseMethods {
   Future<void> addDataToDb(FirebaseUser currentUser) async {
     String username = Utils.getUsername(currentUser.email);
 
-    user = User(
+    user = KUser(
         uid: currentUser.uid,
         email: currentUser.email,
         name: currentUser.displayName,
@@ -74,8 +76,8 @@ class FirebaseMethods {
 
     firestore
         .collection(USERS_COLLECTION)
-        .document(currentUser.uid)
-        .setData(user.toMap(user));
+        .doc(currentUser.uid)
+        .set(user.toMap(user));
   }
 
   Future<void> signOut() async {
@@ -83,14 +85,14 @@ class FirebaseMethods {
     return await _auth.signOut();
   }
 
-  Future<List<User>> fetchAllUsers(FirebaseUser currentUser) async {
-    List<User> userList = List<User>();
+  Future<List<KUser>> fetchAllUsers(User currentUser) async {
+    List<KUser> userList = List<KUser>();
 
     QuerySnapshot querySnapshot =
     await firestore.collection(USERS_COLLECTION).getDocuments();
-    for (var i = 0; i < querySnapshot.documents.length; i++) {
-      if (querySnapshot.documents[i].documentID != currentUser.uid) {
-        userList.add(User.fromMap(querySnapshot.documents[i].data));
+    for (var i = 0; i < querySnapshot.docs.length; i++) {
+      if (querySnapshot.docs[i].id != currentUser.uid) {
+        userList.add(KUser.fromMap(querySnapshot.docs[i].data()));
       }
     }
     return userList;
@@ -117,13 +119,15 @@ class FirebaseMethods {
     // mention try catch later on
 
     try {
-      _storageReference = FirebaseStorage.instance
-          .ref()
-          .child('${DateTime.now().millisecondsSinceEpoch}');
-      StorageUploadTask storageUploadTask =
-      _storageReference.putFile(imageFile);
-      var url = await (await storageUploadTask.onComplete).ref.getDownloadURL();
-      // print(url);
+      FirebaseStorage storage = FirebaseStorage.instance;
+      String url;
+      Reference ref = storage.ref().child("image1" + DateTime.now().toString());
+      UploadTask uploadTask = ref.putFile(imageFile);
+      uploadTask.whenComplete(() {
+        url = ref.getDownloadURL() as String;
+      }).catchError((onError) {
+        print(onError);
+      });
       return url;
     } catch (e) {
       return null;
@@ -147,7 +151,7 @@ class FirebaseMethods {
     // var map = Map<String, dynamic>();
     await firestore
         .collection(MESSAGES_COLLECTION)
-        .document(message.senderId)
+        .doc(message.senderId)
         .collection(message.receiverId)
         .add(map);
 

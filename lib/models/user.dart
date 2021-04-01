@@ -1,4 +1,4 @@
-class User {
+class KUser {
   String uid;
   String name;
   String email;
@@ -7,7 +7,7 @@ class User {
   int state;
   String profilePhoto;
 
-  User({
+  KUser({
     this.uid,
     this.name,
     this.email,
@@ -17,7 +17,7 @@ class User {
     this.profilePhoto,
   });
 
-  Map toMap(User user) {
+  Map toMap(KUser user) {
     var data = Map<String, dynamic>();
     data['uid'] = user.uid;
     data['name'] = user.name;
@@ -30,7 +30,7 @@ class User {
   }
 
   // Named constructor
-  User.fromMap(Map<String, dynamic> mapData) {
+  KUser.fromMap(Map<String, dynamic> mapData) {
     this.uid = mapData['uid'];
     this.name = mapData['name'];
     this.email = mapData['email'];

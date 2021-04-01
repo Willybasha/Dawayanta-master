@@ -2,6 +2,8 @@
 import 'dart:io';
 
 import 'package:daawyenta/models/message.dart';
+import 'package:daawyenta/models/user.dart';
+import 'package:daawyenta/provider/image_upload_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -14,7 +16,7 @@ class FirebaseRepository {
 
   Future<FirebaseUser> signIn() => _firebaseMethods.signIn();
 
-  Future<User> getUserDetails() => _firebaseMethods.getUserDetails();
+  Future<KUser> getUserDetails() => _firebaseMethods.getUserDetails();
 
   Future<bool> authenticateUser(FirebaseUser user) =>
       _firebaseMethods.authenticateUser(user);
@@ -25,7 +27,7 @@ class FirebaseRepository {
   ///responsible for signing out
   Future<void> signOut() => _firebaseMethods.signOut();
 
-  Future<List<User>> fetchAllUsers(FirebaseUser user) =>
+  Future<List<KUser>> fetchAllUsers(User user) =>
       _firebaseMethods.fetchAllUsers(user);
 
   Future<void> addMessageToDb(Message message, User sender, User receiver) =>
