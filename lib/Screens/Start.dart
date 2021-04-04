@@ -1,4 +1,5 @@
 import 'package:daawyenta/Network/auth.dart';
+import 'package:daawyenta/Network/firebase_repository.dart';
 import 'package:daawyenta/Screens/aftersignup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class start extends StatefulWidget {
 class _startState extends State<start> {
   @override
   final auth=FirebaseAuth.instance;
-
+  FirebaseRepository _repository = FirebaseRepository();
   final GlobalKey<FormState>_globalKey=GlobalKey<FormState>();
    var Email=TextEditingController();
    var Password=TextEditingController();
@@ -144,7 +145,9 @@ class _startState extends State<start> {
                         child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20)),
-                        onPressed: () {},
+                        onPressed: () {
+                          preformLogin();
+                        },
                         child: Row(
                           children: [
                             Expanded(
@@ -152,7 +155,7 @@ class _startState extends State<start> {
                               color: Colors.white,),
                             ),
                             Text(
-                              'Login with GMail',
+                              'Login with Gmail',
                               style: TextStyle(color: Colors.white, fontSize: 13),
                             ),
                           ],
@@ -205,5 +208,27 @@ class _startState extends State<start> {
         ]),
       ),
     );
+  }
+
+  void preformLogin() {
+    _repository.signIn().then((User user) {
+      if(user != null ){
+        authenticateUser(user) ;
+      }else{
+        print('there is an error');
+      }
+    });
+  }
+
+  void authenticateUser(User user) {
+    _repository.authenticateUser(user).then((isNewUser){
+      if(isNewUser){
+        _repository.addDataToDb(user).then((value){
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>aftersignup()));
+        });
+      }else{
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>aftersignup()));
+      }
+    });
   }
 }

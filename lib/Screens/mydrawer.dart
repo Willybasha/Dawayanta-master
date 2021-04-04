@@ -1,3 +1,5 @@
+import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Screens/Start.dart';
 import 'package:flutter/material.dart';
 
 class mydrawer extends StatefulWidget {
@@ -6,6 +8,7 @@ class mydrawer extends StatefulWidget {
 }
 
 class _mydrawerState extends State<mydrawer> {
+  FirebaseRepository _repository = FirebaseRepository() ;
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -54,7 +57,13 @@ class _mydrawerState extends State<mydrawer> {
             leading: Icon(Icons.arrow_back),
             title: Text('Logout'),
             onTap: () {
-              Navigator.pop(context);
+              _repository.signOut().whenComplete(() {
+                setState(() {
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>start()));
+                });
+
+            });
+
             },
           ),
         ],

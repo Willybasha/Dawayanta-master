@@ -12,16 +12,16 @@ import 'firebase_methods.dart';
 class FirebaseRepository {
   FirebaseMethods _firebaseMethods = FirebaseMethods();
 
-  Future<FirebaseUser> getCurrentUser() => _firebaseMethods.getCurrentUser();
+  Future<User> getCurrentUser() => _firebaseMethods.getCurrentUser();
 
-  Future<FirebaseUser> signIn() => _firebaseMethods.signIn();
+  Future<User> signIn() => _firebaseMethods.signIn();
 
   Future<KUser> getUserDetails() => _firebaseMethods.getUserDetails();
 
-  Future<bool> authenticateUser(FirebaseUser user) =>
+  Future<bool> authenticateUser(User user) =>
       _firebaseMethods.authenticateUser(user);
 
-  Future<void> addDataToDb(FirebaseUser user) =>
+  Future<void> addDataToDb(User user) =>
       _firebaseMethods.addDataToDb(user);
 
   ///responsible for signing out

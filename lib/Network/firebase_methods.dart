@@ -5,6 +5,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:daawyenta/models/user.dart';
 
@@ -48,7 +49,7 @@ class FirebaseMethods {
         accessToken: _signInAuthentication.accessToken,
         idToken: _signInAuthentication.idToken);
 
-    User user = (await _auth.signInWithCredential(credential)) as FirebaseUser;
+    User user = (await _auth.signInWithCredential(credential)).user;
     return user;
   }
 
@@ -104,7 +105,7 @@ class FirebaseMethods {
 
     await firestore
         .collection(MESSAGES_COLLECTION)
-        .document(message.senderId)
+        .doc(message.senderId)
         .collection(message.receiverId)
         .add(map);
 
