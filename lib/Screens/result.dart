@@ -23,10 +23,8 @@ class _resState extends State<res> {
               children: [
                 Container(
                     width:60,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff1c6e2),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(100),bottomRight:Radius.circular(100)),
-                    )),
+
+                ),
                 Expanded(
                   child: Row(
                       children:[
@@ -41,10 +39,11 @@ class _resState extends State<res> {
 
                 Container(
                     width:60,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff1c6e2),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(100),bottomLeft:Radius.circular(100)),
-                    )),
+                    // decoration: BoxDecoration(
+                    //   color: Color(0xfff1c6e2),
+                    //   borderRadius: BorderRadius.only(topLeft: Radius.circular(100),bottomLeft:Radius.circular(100)),
+                    // )
+                ),
 
               ],
             ),

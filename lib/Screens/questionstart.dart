@@ -1,8 +1,6 @@
 import 'package:daawyenta/Screens/mydrawer.dart';
 import 'package:daawyenta/Screens/question2.dart';
 import 'package:flutter/material.dart';
-import 'package:splashscreen/splashscreen.dart';
-
 import 'question2.dart';
 
 class questart extends StatefulWidget {

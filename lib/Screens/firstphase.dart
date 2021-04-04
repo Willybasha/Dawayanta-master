@@ -22,35 +22,33 @@ class _firstphaseState extends State<firstphase> {
           backgroundColor: Colors.white,
           iconTheme: new IconThemeData(color: Colors.black),
           flexibleSpace: Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                    width:60,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff1c6e2),
-                      borderRadius: BorderRadius.only(topRight: Radius.circular(100),bottomRight:Radius.circular(100)),
-                    )),
-                Expanded(
-                  child: Row(
+            child: SafeArea(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Container(
+                  //     width:60,
+                  //     decoration: BoxDecoration(
+                  //       color: Color(0xfff1c6e2),
+                  //       borderRadius: BorderRadius.only(topRight: Radius.circular(100),bottomRight:Radius.circular(100)),
+                  //     )),
+                  Row(
                    children:[
                      Container(
-                        margin: EdgeInsets.only(top: 30,left: 30 ),
                         child: Image.asset('assets/mini.jpg',height: 80,width: 100,)),
                   Container(
-                      margin: EdgeInsets.only(top: 30 ),
                       child: Text('DAAWEYNTA',style: TextStyle(fontSize: 20,color: Colors.black),)),]
                   ),
-                ),
 
-                Container(
-                    width:60,
-                    decoration: BoxDecoration(
-                      color: Color(0xfff1c6e2),
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(100),bottomLeft:Radius.circular(100)),
-                    )),
+                  // Container(
+                  //     width:60,
+                  //     decoration: BoxDecoration(
+                  //       color: Color(0xfff1c6e2),
+                  //       borderRadius: BorderRadius.only(topLeft: Radius.circular(100),bottomLeft:Radius.circular(100)),
+                  //     )),
 
-              ],
+                ],
+              ),
             ),
           ),
 

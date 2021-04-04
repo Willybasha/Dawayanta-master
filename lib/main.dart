@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         future: _repository.getCurrentUser(),
         builder: (context, snapshot ){
             if(snapshot.hasData){
-              return start();
+              return aftersignup();
             }else{
               return start();
             }
