@@ -6,6 +6,7 @@ class KUser {
   String status;
   int state;
   String profilePhoto;
+  String phoneNumber;
 
   KUser({
     this.uid,
@@ -15,6 +16,8 @@ class KUser {
     this.status,
     this.state,
     this.profilePhoto,
+    this.phoneNumber
+    //
   });
 
   Map toMap(KUser user) {
@@ -26,6 +29,9 @@ class KUser {
     data["status"] = user.status;
     data["state"] = user.state;
     data["profile_photo"] = user.profilePhoto;
+    data["phone_number"] = user.phoneNumber;
+
+    //
     return data;
   }
 
@@ -38,5 +44,7 @@ class KUser {
     this.status = mapData['status'];
     this.state = mapData['state'];
     this.profilePhoto = mapData['profile_photo'];
+    this.phoneNumber = mapData['phone_number'];
+    //
   }
 }

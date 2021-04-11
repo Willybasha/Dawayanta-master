@@ -73,7 +73,9 @@ class FirebaseMethods {
         email: currentUser.email,
         name: currentUser.displayName,
         profilePhoto: currentUser.photoURL,
-        username: username);
+        phoneNumber: currentUser.phoneNumber,
+        username: username
+    );
 
     firestore
         .collection(USERS_COLLECTION)
@@ -111,7 +113,7 @@ class FirebaseMethods {
 
     return await firestore
         .collection(MESSAGES_COLLECTION)
-        .document(message.receiverId)
+        .doc(message.receiverId)
         .collection(message.senderId)
         .add(map);
   }
