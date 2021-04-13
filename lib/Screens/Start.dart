@@ -234,7 +234,7 @@ class _startState extends State<start> {
     _repository.authenticateUser(user).then((isNewUser){
       if(isNewUser){
         _repository.addDataToDb(user).then((value){
-          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>signup2()));
+          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>signup2(currentuser: user,)));
         });
       }else{
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>aftersignup()));

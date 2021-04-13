@@ -1,3 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/constants.dart';
+import 'package:daawyenta/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +10,9 @@ import 'package:flutter/material.dart';
 import 'aftersignup.dart';
 
 class signup2 extends StatefulWidget {
+  final  currentuser ;
+
+  const signup2({Key key, this.currentuser}) : super(key: key);
   @override
   _signup2State createState() => _signup2State();
 }
@@ -22,7 +30,8 @@ class _signup2State extends State<signup2> {
   String medicalrec ='No';
   final List<String> allegry =["Yes","No"];
   String selectedallegry ='No';
-
+  FirebaseRepository _repository = FirebaseRepository();
+  KUser user = KUser();
   DateTime _datetime=DateTime.now();
   Future<Null>SelectDate(BuildContext Context)async{
     final DateTime Picked = await showDatePicker(
@@ -249,8 +258,13 @@ class _signup2State extends State<signup2> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20)),
             onPressed: () {
-              Navigator.push(context,MaterialPageRoute(
-                builder: (ctx)=> aftersignup(),),);
+              addToDBSecondData(widget.currentuser);
+                setState(() {
+                });
+                Navigator.push(context,MaterialPageRoute(
+                  builder: (ctx)=> aftersignup(),),);
+
+
             },
             child: Text(
               'Next',
@@ -267,4 +281,16 @@ class _signup2State extends State<signup2> {
       ),
     );
   }
+ Future<void> addToDBSecondData (User currentUser){
+    _repository.getCurrentUser() ;
+  Map<String , dynamic> data = {
+    "gender": selectedgender ,
+    "birthdate": _datetime ,
+    "Diabetes" : diabetesanswer ,
+    "Pressure_disease": pressureanswer ,
+    "Medical_Records": medicalrec ,
+    "allery": selectedallegry ,
+ };
+  FirebaseFirestore.instance.collection(USERS_COLLECTION).doc(currentUser.uid).update(data) ;
+ }
 }
