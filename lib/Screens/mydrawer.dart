@@ -2,6 +2,8 @@ import 'package:daawyenta/Network/firebase_repository.dart';
 import 'package:daawyenta/Screens/Start.dart';
 import 'package:flutter/material.dart';
 
+import 'chat/home_screen.dart';
+
 class mydrawer extends StatefulWidget {
   @override
   _mydrawerState createState() => _mydrawerState();
@@ -45,8 +47,10 @@ class _mydrawerState extends State<mydrawer> {
           ),
           ListTile(
             leading: Icon(Icons.apps),
-            title: Text('My games'),
-            onTap: () {},
+            title: Text('chat'),
+            onTap: () {
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => HomeScreen())) ;
+            },
           ),
           ListTile(
             leading: Icon(Icons.settings),
