@@ -28,6 +28,7 @@ class FirebaseMethods {
   Future<User> getCurrentUser() async {
     User currentUser;
     currentUser = await _auth.currentUser;
+
     return currentUser;
   }
 
@@ -178,4 +179,9 @@ class FirebaseMethods {
 
     setImageMsg(url, receiverId, senderId);
   }
+}
+
+void getUserDate (String user)async {
+  var data = await Firestore.instance.collection(USERS_COLLECTION).doc('${user}').get() ;
+  print(data['name']) ;
 }

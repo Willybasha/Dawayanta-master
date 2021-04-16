@@ -1,5 +1,6 @@
 import 'package:daawyenta/Screens/mydrawer.dart';
 import 'package:daawyenta/Screens/questionstart.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,31 @@ class firstphase extends StatefulWidget {
 
 class _firstphaseState extends State<firstphase> {
   bool set =false;
+  final _auth = FirebaseAuth.instance;
+  User loggedinuser;
+  bool _loading = false ;
+  Future<void> initState()  {
+    super.initState();
+    getcurrentuser();
+
+  }
+
+  void getcurrentuser() async {
+    try {
+      setState(() {
+        _loading = true ;
+      });
+      final user = await _auth.currentUser;
+      if (user != null) {
+        loggedinuser = user;
+      }
+      setState(() {
+        _loading = false ;
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,7 +80,7 @@ class _firstphaseState extends State<firstphase> {
 
         ),
       ),
-      endDrawer: mydrawer(),
+      endDrawer: mydrawer(LoggedinUser: loggedinuser,),
       backgroundColor: Colors.white,
       body:
       Column(

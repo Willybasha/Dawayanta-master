@@ -237,7 +237,8 @@ class _startState extends State<start> {
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>signup2(currentuser: user,)));
         });
       }else{
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>aftersignup()));
+        print("${user.uid}");
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>aftersignup(user: user.uid,)));
       }
     });
   }

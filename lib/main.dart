@@ -1,4 +1,5 @@
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/models/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         future: _repository.getCurrentUser(),
         builder: (context, snapshot ){
             if(snapshot.hasData){
+
               return aftersignup();
             }else{
               return start();
