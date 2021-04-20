@@ -1,4 +1,5 @@
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Screens/chat/search_screen.dart';
 import 'package:daawyenta/Screens/chat/widgets/appbar.dart';
 import 'package:daawyenta/Screens/chat/widgets/cutom_tile.dart';
 import 'package:daawyenta/constants.dart';
@@ -46,7 +47,9 @@ class _ChatListScreenState extends State<ChatListScreen> {
             Icons.search,
             color: green,
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>SearchScreen()));
+          },
         ),
         IconButton(
           icon: Icon(

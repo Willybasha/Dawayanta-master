@@ -30,7 +30,7 @@ class FirebaseRepository {
   Future<List<KUser>> fetchAllUsers(User user) =>
       _firebaseMethods.fetchAllUsers(user);
 
-  Future<void> addMessageToDb(Message message, User sender, User receiver) =>
+  Future<void> addMessageToDb(Message message, KUser sender, KUser receiver) =>
       _firebaseMethods.addMessageToDb(message, sender, receiver);
 
   Future<String> uploadImageToStorage(File imageFile) =>

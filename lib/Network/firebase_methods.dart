@@ -103,7 +103,7 @@ class FirebaseMethods {
   }
 
   Future<void> addMessageToDb(
-      Message message, User sender, User receiver) async {
+      Message message, KUser sender, KUser receiver) async {
     var map = message.toMap();
 
     await firestore
