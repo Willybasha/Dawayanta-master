@@ -128,7 +128,7 @@ class FirebaseMethods {
       Reference ref = storage.ref().child("image1" + DateTime.now().toString());
       UploadTask uploadTask = ref.putFile(imageFile);
       uploadTask.whenComplete(() {
-        url = ref.getDownloadURL() as String;
+        url = ref.getDownloadURL() as String ;
       }).catchError((onError) {
         print(onError);
       });

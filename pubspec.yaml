@@ -36,6 +36,12 @@ dependencies:
   image: ^3.0.2
   path_provider:
   shimmer: ^1.1.2
+  dio:
+  http:
+  percent_indicator:
+  cached_network_image:
+  emoji_picker:
+  provider:
 
 
 
