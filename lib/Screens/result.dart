@@ -84,7 +84,7 @@ class _resState extends State<res> {
 
         ),
       ),
-      endDrawer: mydrawer(LoggedinUser: loggedinuser,),
+      drawer: mydrawer(LoggedinUser: loggedinuser,),
       body: FutureBuilder(
         future: getModel(symptoms: widget.symptoms),
         builder: (context , snapshot){
@@ -98,7 +98,7 @@ class _resState extends State<res> {
                 return Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Container(
-                    height: 200,
+                    height: 230,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
@@ -112,34 +112,36 @@ class _resState extends State<res> {
                           padding: const EdgeInsets.all(8.0),
                           child: Text('${data[index][0]}',style: TextStyle(fontSize: 25,color: Colors.black54,fontWeight: FontWeight.bold),),
                         ),
-
-                        SizedBox(height: 40,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircularPercentIndicator(
+                                progressColor:pink ,
+                                radius: 80.0,
+                                lineWidth: 13.0,
+                                animation: true,
+                                percent: prec/100,
+                                center: new Text(
+                                  "${prec.toStringAsFixed(2)}%",
+                                  style:
+                                  new TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0),
+                                )
+                            )
+                          ],
+                        ),
                         Row(children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              child: RaisedButton(
-                                  elevation: 8,
-                                  shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ,
-                                  color: Color(0xfff1c6e2).withOpacity(0.4),
-                                  onPressed:(){},
-                                  child:Text('check doctor',style: TextStyle(fontSize:25,color: Colors.black54),)),),
-                          ),
+                          Container(
+
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: RaisedButton(
+                                elevation: 8,
+                                shape:RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ,
+                                color: Color(0xfff1c6e2).withOpacity(0.4),
+                                onPressed:(){},
+                                child:Text('check doctor',style: TextStyle(fontSize:25,color: Colors.black54),)),),
                           SizedBox(width: 30,),
                           //Expanded(child: Text('${prec.toStringAsFixed(2)}%',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),))
-                          CircularPercentIndicator(
-                            progressColor:pink ,
-
-                            radius: 100.0,
-                            lineWidth: 13.0,
-                            animation: true,
-                            percent: prec/100,
-                            center: new Text(
-                              "${prec.toStringAsFixed(2)}",
-                              style:
-                              new TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0),
-                            )
-                          )],)
+                          ],)
                       ],
                     ),
                   ),

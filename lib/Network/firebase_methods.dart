@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:daawyenta/provider/image_upload_provider.dart';
 import 'package:daawyenta/utils/utils.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+import 'package:firebase_storage/firebase_storage.dart' ;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/models/message.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +12,8 @@ import 'package:daawyenta/models/user.dart';
 import '../constants.dart';
 class FirebaseMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  FirebaseStorage storage = FirebaseStorage.instance;
+
   GoogleSignIn _googleSignIn = GoogleSignIn();
   static final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
@@ -20,7 +22,7 @@ class FirebaseMethods {
 
   static final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  // StorageReference _storageReference;
+   //StorageReference _storageReference;
 
   //user class
   KUser user = KUser();
@@ -123,15 +125,14 @@ class FirebaseMethods {
     // mention try catch later on
 
     try {
-      FirebaseStorage storage = FirebaseStorage.instance;
+
       String url;
       Reference ref = storage.ref().child("image1" + DateTime.now().toString());
-      UploadTask uploadTask = ref.putFile(imageFile);
-      uploadTask.whenComplete(() {
-        url = ref.getDownloadURL() as String ;
-      }).catchError((onError) {
-        print(onError);
-      });
+      TaskSnapshot storageTaskSnapshot  =await ref.putFile(imageFile);
+      print(storageTaskSnapshot.ref.getDownloadURL());
+
+       url = await storageTaskSnapshot.ref.getDownloadURL().toString();
+
       return url;
     } catch (e) {
       return null;

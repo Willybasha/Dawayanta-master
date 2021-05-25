@@ -17,8 +17,8 @@ class CallMethods {
       call.hasDialled = false;
       Map<String, dynamic> hasNotDialledMap = call.toMap(call);
 
-      await callCollection.doc(call.callerId).setData(hasDialledMap);
-      await callCollection.doc(call.receiverId).setData(hasNotDialledMap);
+      await callCollection.doc(call.callerId).set(hasDialledMap);
+      await callCollection.doc(call.receiverId).set(hasNotDialledMap);
       return true;
     } catch (e) {
       print(e);

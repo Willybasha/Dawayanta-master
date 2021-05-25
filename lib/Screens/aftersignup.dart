@@ -95,7 +95,7 @@ class _aftersignupState extends State<aftersignup> {
             ),
           ),
         ),
-        endDrawer: mydrawer(LoggedinUser: loggedinuser,),
+        drawer: mydrawer(LoggedinUser: loggedinuser,),
         body: ModalProgressHUD(
           inAsyncCall: _loading ,
           child: ListView(

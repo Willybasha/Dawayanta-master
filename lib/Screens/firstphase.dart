@@ -85,7 +85,7 @@ class _firstphaseState extends State<firstphase> {
 
         ),
       ),
-      endDrawer: mydrawer(LoggedinUser: loggedinuser,),
+      drawer: mydrawer(LoggedinUser: loggedinuser,),
       backgroundColor: Colors.white,
       body: Column(
 
@@ -188,10 +188,7 @@ class _firstphaseState extends State<firstphase> {
                     _globalKey.currentState.save() ;
                     symptomsEntered = symptoms.text ;
                     print('$symptomsEntered') ;
-
-
                     Navigator.push(context, MaterialPageRoute(builder: (context) => res(symptoms: symptomsEntered,))) ;
-
                   }
                 },
                 child: Center(child: Text('Get results', style: TextStyle(
@@ -206,5 +203,4 @@ class _firstphaseState extends State<firstphase> {
       ),
     );
   }
-  
 }
