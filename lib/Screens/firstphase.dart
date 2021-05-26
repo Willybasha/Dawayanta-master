@@ -19,7 +19,7 @@ class _firstphaseState extends State<firstphase> {
   String symptomsEntered ;
   bool set =false;
   final _auth = FirebaseAuth.instance;
-  User loggedinuser;
+  FirebaseUser loggedinuser;
   bool _loading = false ;
   Future<void> initState()  {
     super.initState();
@@ -32,7 +32,7 @@ class _firstphaseState extends State<firstphase> {
       setState(() {
         _loading = true ;
       });
-      final user = await _auth.currentUser;
+      final user = await _auth.currentUser();
       if (user != null) {
         loggedinuser = user;
       }

@@ -47,13 +47,13 @@ if(googleSignInAccount != null)
     AuthCredential credential= GoogleAuthProvider.getCredential(idToken:googleSignInAuthentication.idToken ,
         accessToken:googleSignInAuthentication.accessToken);
     final authresult = await _auth.signInWithCredential(credential);
-    FirebaseUser user = await _auth.currentUser;
+    FirebaseUser user = await _auth.currentUser();
     return Future.value(true);
 
   }
 }
 Future SignOutUser()async{
-  FirebaseUser user = await _auth.currentUser;
+  FirebaseUser user = await _auth.currentUser();
   if(user.providerData[1].providerId == 'google.com')
   {await _auth.signOut();}
   await googlesign.signOut();

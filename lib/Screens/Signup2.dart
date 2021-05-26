@@ -281,7 +281,7 @@ class _signup2State extends State<signup2> {
       ),
     );
   }
- Future<void> addToDBSecondData (User currentUser){
+ Future<void> addToDBSecondData ( FirebaseUser currentUser){
     _repository.getCurrentUser() ;
   Map<String , dynamic> data = {
     "gender": selectedgender ,
@@ -291,6 +291,6 @@ class _signup2State extends State<signup2> {
     "Medical_Records": medicalrec ,
     "allery": selectedallegry ,
  };
-  FirebaseFirestore.instance.collection(USERS_COLLECTION).doc(currentUser.uid).update(data) ;
+  Firestore.instance.collection(USERS_COLLECTION).document(currentUser.uid).updateData(data) ;
  }
 }

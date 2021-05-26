@@ -23,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen> {
     // TODO: implement initState
     super.initState();
 
-    _repository.getCurrentUser().then((User user) {
+    _repository.getCurrentUser().then((FirebaseUser user) {
       _repository.fetchAllUsers(user).then((List<KUser> list) {
         setState(() {
           userList = list.cast<KUser

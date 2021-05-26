@@ -18,7 +18,6 @@ class Call {
     this.channelId,
     this.hasDialled,
   });
-
   // to map
   Map<String, dynamic> toMap(Call call) {
     Map<String, dynamic> callMap = Map();

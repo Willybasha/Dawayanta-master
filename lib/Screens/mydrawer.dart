@@ -8,7 +8,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'chat/home_screen.dart';
 
 class mydrawer extends StatefulWidget {
-  final User LoggedinUser ;
+  final FirebaseUser LoggedinUser ;
 
   const mydrawer({Key key, this.LoggedinUser}) : super(key: key);
   @override
@@ -54,7 +54,7 @@ class _mydrawerState extends State<mydrawer> {
                     child: CircleAvatar(
                       radius: 70,
                       backgroundImage: NetworkImage(
-                          '${widget.LoggedinUser.photoURL}'),
+                          '${widget.LoggedinUser.photoUrl}'),
                     ),
                   ),
                   SizedBox(

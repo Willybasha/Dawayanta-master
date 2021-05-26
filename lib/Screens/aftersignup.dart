@@ -23,7 +23,7 @@ class _aftersignupState extends State<aftersignup> {
   bool _loading = false ;
   String selectedanswer = "for me";
   final _auth = FirebaseAuth.instance;
-  User loggedinuser;
+  FirebaseUser loggedinuser;
   Future<void> initState()  {
     super.initState();
     getcurrentuser();
@@ -35,7 +35,7 @@ class _aftersignupState extends State<aftersignup> {
       setState(() {
         _loading = true ;
       });
-      final user = await _auth.currentUser;
+      final user = await _auth.currentUser();
       if (user != null) {
         loggedinuser = user;
       }

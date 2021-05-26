@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/models/call.dart';
 import 'package:daawyenta/provider/user_provider.dart';
 import 'package:daawyenta/services/call_methods.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -374,7 +373,7 @@ class _CallScreenState extends State<CallScreen> {
         child: Stack(
           children: <Widget>[
             _viewRows(),
-            // _panel(),
+             _panel(),
             _toolbar(),
           ],
         ),

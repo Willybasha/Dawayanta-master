@@ -1,8 +1,7 @@
 import 'package:daawyenta/Screens/chat/widgets/cached_image.dart';
 import 'package:daawyenta/models/call.dart';
 import 'package:daawyenta/services/call_methods.dart';
-import 'package:daawyenta/utils/utils.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:daawyenta/utils/permissions.dart';
 import 'package:flutter/material.dart';
 
 import '../call_screen.dart';

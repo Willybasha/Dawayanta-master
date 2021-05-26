@@ -1,6 +1,9 @@
 import 'package:daawyenta/constants.dart';
+import 'package:daawyenta/provider/user_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:provider/provider.dart';
 
 import 'chat_list.dart';
 
@@ -12,11 +15,16 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   PageController pageController;
   int _page = 0;
+  UserProvider userProvider;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      userProvider = Provider.of<UserProvider>(context, listen: false);
+      userProvider.refreshUser();
+    });
     pageController = PageController();
   }
 

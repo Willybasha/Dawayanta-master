@@ -10,6 +10,7 @@ import 'package:daawyenta/enum/view_state.dart';
 import 'package:daawyenta/models/message.dart';
 import 'package:daawyenta/models/user.dart';
 import 'package:daawyenta/provider/image_upload_provider.dart';
+import 'package:daawyenta/utils/call_utilities.dart';
 import 'package:daawyenta/utils/utils.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/material.dart';
@@ -123,7 +124,7 @@ class _ChatScreenState extends State<ChatScreen> {
     return StreamBuilder(
       stream: Firestore.instance
           .collection(MESSAGES_COLLECTION)
-          .doc(_currentUserId)
+          .document(_currentUserId)
           .collection(widget.receiver.uid)
           .orderBy(TIMESTAMP_FIELD, descending: true)
           .snapshots(),
@@ -144,10 +145,10 @@ class _ChatScreenState extends State<ChatScreen> {
           padding: EdgeInsets.all(10),
           controller: _listScrollController,
           reverse: true,
-          itemCount: snapshot.data.docs.length,
+          itemCount: snapshot.data.documents.length,
           itemBuilder: (context, index) {
             // mention the arrow syntax if you get the time
-            return chatMessageItem(snapshot.data.docs[index]);
+            return chatMessageItem(snapshot.data.documents[index]);
           },
         );
       },
@@ -155,7 +156,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
-    Message _message = Message.fromMap(snapshot.data());
+    Message _message = Message.fromMap(snapshot.data);
 
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
@@ -203,7 +204,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     )
         : message.photoUrl != null
-        ? CachedImage(url: message.photoUrl)
+        ? CachedImage(message.photoUrl)
         : Text("Url was null");
   }
 
@@ -460,7 +461,14 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(
             Icons.video_call,
           ),
-          onPressed: () {},
+            onPressed: () async =>
+            await Permissions.cameraAndMicrophonePermissionsGranted()
+                ? CallUtils.dial(
+              from: sender,
+              to: widget.receiver,
+              context: context,
+            )
+                : {},
         ),
         IconButton(
           icon: Icon(

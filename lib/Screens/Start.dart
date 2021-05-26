@@ -16,6 +16,7 @@ class start extends StatefulWidget {
 }
 class _startState extends State<start> {
   @override
+  bool isLoginPressed = false;
   final auth=FirebaseAuth.instance;
   FirebaseRepository _repository = FirebaseRepository();
   final GlobalKey<FormState>_globalKey=GlobalKey<FormState>();
@@ -221,7 +222,13 @@ class _startState extends State<start> {
   }
 
   void preformLogin() {
-    _repository.signIn().then((User user) {
+    print("tring to perform login");
+
+    setState(() {
+      isLoginPressed = true;
+    });
+
+    _repository.signIn().then((FirebaseUser user) {
       if(user != null ){
         authenticateUser(user) ;
       }else{
@@ -230,8 +237,11 @@ class _startState extends State<start> {
     });
   }
 
-  void authenticateUser(User user) {
+  void authenticateUser(FirebaseUser user) {
     _repository.authenticateUser(user).then((isNewUser){
+      setState(() {
+        isLoginPressed = false;
+      });
       if(isNewUser){
         _repository.addDataToDb(user).then((value){
           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>signup2(currentuser: user,)));

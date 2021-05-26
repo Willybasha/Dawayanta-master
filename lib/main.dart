@@ -12,7 +12,7 @@ import 'Screens/Start.dart';
 import 'Screens/aftersignup.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await FirebaseApp.instance;
   // print('start') ;
   // await getModel() ;
   // print('end') ;
@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           future: _repository.getCurrentUser(),
           builder: (context, snapshot ){
               if(snapshot.hasData){
-
                 return aftersignup();
               }else{
                 return start();
