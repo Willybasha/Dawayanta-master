@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/Network/firebase_methods.dart';
+import 'package:daawyenta/Network/firebase_repository.dart';
 import 'package:daawyenta/models/user.dart';
+import 'package:daawyenta/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,17 +19,25 @@ class aftersignup extends StatefulWidget {
   @override
   _aftersignupState createState() => _aftersignupState();
 }
+final FirebaseRepository _repository = FirebaseRepository();
 
 class _aftersignupState extends State<aftersignup> {
   final List<String> answers = ["for me", "for another one"];
   bool _loading = false ;
   String selectedanswer = "for me";
   final _auth = FirebaseAuth.instance;
+  String username ;
+  String profileUrl ;
+  String email ;
   FirebaseUser loggedinuser;
   Future<void> initState()  {
     super.initState();
-    getcurrentuser();
+    _repository.getCurrentUser().then((user) {
+      String currentUserId = user.uid;
+       username = user.displayName ;
 
+    });
+    getcurrentuser();
   }
 
   void getcurrentuser() async {
@@ -111,10 +121,10 @@ class _aftersignupState extends State<aftersignup> {
                     children: [
                       Column(
                         children: [
-                          Text("Welcome ${loggedinuser.displayName},",style: TextStyle(
+                          username != null? Text("Welcome ${username},",style: TextStyle(
                             color:  Colors.black45,
                             fontSize: 26.0
-                          ),),
+                          ),):Text("wait"),
                           Text("let's start the consultant ",style: TextStyle(
                             color: Colors.black45,
                             fontSize: 15.0

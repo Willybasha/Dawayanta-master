@@ -39,7 +39,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
         ),
         onPressed: () {},
       ),
-      title: UserCircle(initials),
+      title:initials != null? UserCircle(initials): CircularProgressIndicator(),
       centerTitle: true,
       actions: <Widget>[
         IconButton(
