@@ -1,5 +1,6 @@
 import 'package:daawyenta/Network/firebase_repository.dart';
 import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
+import 'package:daawyenta/Screens/chat/home_screen.dart';
 import 'package:daawyenta/Screens/chat/widgets/cutom_tile.dart';
 import 'package:daawyenta/models/user.dart';
 import 'package:daawyenta/utils/univesal_val.dart';
@@ -38,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.pop(context),
+        onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=> HomeScreen())),
       ),
       elevation: 0,
       bottom: PreferredSize(
