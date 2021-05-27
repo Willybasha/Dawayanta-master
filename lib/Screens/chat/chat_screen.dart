@@ -2,21 +2,24 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
 import 'package:daawyenta/Screens/chat/widgets/appbar.dart';
 import 'package:daawyenta/Screens/chat/widgets/cached_image.dart';
 import 'package:daawyenta/Screens/chat/widgets/cutom_tile.dart';
-import 'package:daawyenta/constants.dart';
 import 'package:daawyenta/enum/view_state.dart';
 import 'package:daawyenta/models/message.dart';
 import 'package:daawyenta/models/user.dart';
 import 'package:daawyenta/provider/image_upload_provider.dart';
 import 'package:daawyenta/utils/call_utilities.dart';
+import 'package:daawyenta/utils/univesal_val.dart';
 import 'package:daawyenta/utils/utils.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:daawyenta/utils/univesal_val.dart';
+
+import '../../constants.dart';
+
 class ChatScreen extends StatefulWidget {
   final KUser receiver;
 
@@ -80,24 +83,26 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     _imageUploadProvider = Provider.of<ImageUploadProvider>(context);
 
-    return Scaffold(
-      backgroundColor: UniversalVariables.blackColor,
-      appBar: customAppBar(context),
-      body: Column(
-        children: <Widget>[
-          Flexible(
-            child: messageList(),
-          ),
-          _imageUploadProvider.getViewState == ViewState.LOADING
-              ? Container(
-            alignment: Alignment.centerRight,
-            margin: EdgeInsets.only(right: 15),
-            child: CircularProgressIndicator(),
-          )
-              : Container(),
-          chatControls(),
-          showEmojiPicker ? Container(child: emojiContainer()) : Container(),
-        ],
+    return PickupLayout(
+      scaffold: Scaffold(
+        backgroundColor: UniversalVariables.blackColor,
+        appBar: customAppBar(context),
+        body: Column(
+          children: <Widget>[
+            Flexible(
+              child: messageList(),
+            ),
+            _imageUploadProvider.getViewState == ViewState.LOADING
+                ? Container(
+              alignment: Alignment.centerRight,
+              margin: EdgeInsets.only(right: 15),
+              child: CircularProgressIndicator(),
+            )
+                : Container(),
+            chatControls(),
+            showEmojiPicker ? Container(child: emojiContainer()) : Container(),
+          ],
+        ),
       ),
     );
   }
@@ -194,7 +199,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   getMessage(Message message) {
-
     return message.type != MESSAGE_TYPE_IMAGE
         ? Text(
       message.message,
@@ -204,7 +208,12 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
     )
         : message.photoUrl != null
-        ? CachedImage(message.photoUrl)
+        ? CachedImage(
+      message.photoUrl,
+      height: 250,
+      width: 250,
+      radius: 10,
+    )
         : Text("Url was null");
   }
 
@@ -446,7 +455,6 @@ class _ChatScreenState extends State<ChatScreen> {
       leading: IconButton(
         icon: Icon(
           Icons.arrow_back,
-
         ),
         onPressed: () {
           Navigator.pop(context);
@@ -461,14 +469,14 @@ class _ChatScreenState extends State<ChatScreen> {
           icon: Icon(
             Icons.video_call,
           ),
-            onPressed: () async =>
-            await Permissions.cameraAndMicrophonePermissionsGranted()
-                ? CallUtils.dial(
-              from: sender,
-              to: widget.receiver,
-              context: context,
-            )
-                : {},
+          onPressed: () async =>
+          await Permissions.cameraAndMicrophonePermissionsGranted()
+              ? CallUtils.dial(
+            from: sender,
+            to: widget.receiver,
+            context: context,
+          )
+              : {},
         ),
         IconButton(
           icon: Icon(

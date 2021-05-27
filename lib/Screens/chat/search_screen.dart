@@ -1,11 +1,13 @@
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
 import 'package:daawyenta/Screens/chat/widgets/cutom_tile.dart';
-import 'package:daawyenta/constants.dart';
 import 'package:daawyenta/models/user.dart';
+import 'package:daawyenta/utils/univesal_val.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'chat_screen.dart';
+
 class SearchScreen extends StatefulWidget {
   @override
   _SearchScreenState createState() => _SearchScreenState();
@@ -20,14 +22,12 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
 
     _repository.getCurrentUser().then((FirebaseUser user) {
       _repository.fetchAllUsers(user).then((List<KUser> list) {
         setState(() {
-          userList = list.cast<KUser
-          >();
+          userList = list;
         });
       });
     });
@@ -52,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 query = val;
               });
             },
-            cursorColor: Colors.black,
+            cursorColor: UniversalVariables.blackColor,
             autofocus: true,
             style: TextStyle(
               fontWeight: FontWeight.bold,
@@ -83,100 +83,74 @@ class _SearchScreenState extends State<SearchScreen> {
 
   buildSuggestions(String query) {
     final List<KUser> suggestionList = query.isEmpty
-        ? []
-        : userList.where((KUser user) {
-      String _getUsername = user.username.toLowerCase();
-      String _query = query.toLowerCase();
-      String _getName = user.name.toLowerCase();
-      bool matchesUsername = _getUsername.contains(_query);
-      bool matchesName = _getName.contains(_query);
+    ? []
+    : userList != null
+    ? userList.where((KUser user) {
+    String _getUsername = user.username.toLowerCase();
+    String _query = query.toLowerCase();
+    String _getName = user.name.toLowerCase();
+    bool matchesUsername = _getUsername.contains(_query);
+    bool matchesName = _getName.contains(_query);
 
-      return (matchesUsername || matchesName);
+    return (matchesUsername || matchesName);
 
-      // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
-      //     (user.name.toLowerCase().contains(query.toLowerCase()))),
-    }).toList();
+    // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
+    //     (user.name.toLowerCase().contains(query.toLowerCase()))),
+    }).toList()
+        : [];
 
     return ListView.builder(
-      itemCount: suggestionList.length,
-      itemBuilder: ((context, index) {
-        KUser searchedUser = KUser(
-            uid: suggestionList[index].uid,
-            profilePhoto: suggestionList[index].profilePhoto,
-            name: suggestionList[index].name,
-            username: suggestionList[index].username);
+    itemCount: suggestionList.length,
+    itemBuilder: ((context, index) {
+    KUser searchedUser = KUser(
+    uid: suggestionList[index].uid,
+    profilePhoto: suggestionList[index].profilePhoto,
+    name: suggestionList[index].name,
+    username: suggestionList[index].username);
 
-        return CustomTile(
-          mini: false,
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => ChatScreen(
-                      receiver: searchedUser,
-                    )));
-          },
-          leading: CircleAvatar(
-            backgroundImage: NetworkImage(searchedUser.profilePhoto),
-            backgroundColor: Colors.grey,
-          ),
-          title: Text(
-            searchedUser.username,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          subtitle: Text(
-            searchedUser.name,
-            style: TextStyle(color: Colors.grey),
-          ),
-        );
-      }),
+    return CustomTile(
+    mini: false,
+    onTap: () {
+    Navigator.push(
+    context,
+    MaterialPageRoute(
+    builder: (context) => ChatScreen(
+    receiver: searchedUser,
+    )));
+    },
+    leading: CircleAvatar(
+    backgroundImage: NetworkImage(searchedUser.profilePhoto),
+    backgroundColor: Colors.grey,
+    ),
+    title: Text(
+    searchedUser.username,
+    style: TextStyle(
+    color: Colors.white,
+    fontWeight: FontWeight.bold,
+    ),
+    ),
+    subtitle: Text(
+    searchedUser.name,
+    style: TextStyle(color: UniversalVariables.greyColor),
+    ),
+    );
+    }),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[200],
-      appBar: searchAppBar(context),
-      body: Container(
-        padding: EdgeInsets.symmetric(horizontal: 20),
-        child: buildSuggestions(query),
+    return PickupLayout(
+      scaffold: Scaffold(
+        backgroundColor: UniversalVariables.blackColor,
+        appBar: searchAppBar(context),
+        body: Container(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: buildSuggestions(query),
+        ),
       ),
     );
   }
 }
-
-//  return ListView.builder(
-//       itemCount: suggestionList.length,
-//       itemBuilder: ((context, index) {
-//         User searchedUser = User(
-//             uid: suggestionList[index].uid,
-//             profilePhoto: suggestionList[index].profilePhoto,
-//             name: suggestionList[index].name,
-//             username: suggestionList[index].username);
-
-//         return CustomTile(
-//           mini: false,
-//           onTap: () {;
-//           },
-//           leading: CircleAvatar(
-//             backgroundImage: NetworkImage(searchedUser.profilePhoto),
-//             backgroundColor: Colors.grey,
-//           ),
-//           title: Text(
-//             searchedUser.username,
-//             style: TextStyle(
-//               color: Colors.white,
-//               fontWeight: FontWeight.bold,
-//             ),
-//           ),
-//           subtitle: Text(
-//             searchedUser.name,
-//             style: TextStyle(color: UniversalVariables.greyColor),
-//           ),
-//         );
-//       }),
-//     );
+//WidgetsBinding.instance
+//                       .addPostFrameCallback((_) => searchController.clear());
