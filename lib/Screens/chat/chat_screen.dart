@@ -1,7 +1,10 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daawyenta/Network/auth_methods.dart';
+import 'package:daawyenta/Network/chat_methods.dart';
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Network/storage_methods.dart';
 import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
 import 'package:daawyenta/Screens/chat/widgets/appbar.dart';
 import 'package:daawyenta/Screens/chat/widgets/cached_image.dart';
@@ -33,7 +36,9 @@ class _ChatScreenState extends State<ChatScreen> {
   TextEditingController textFieldController = TextEditingController();
   FocusNode textFieldFocus = FocusNode();
 
-  FirebaseRepository _repository = FirebaseRepository();
+  final StorageMethods _storageMethods = StorageMethods();
+  final ChatMethods _chatMethods = ChatMethods();
+  final AuthMethods _authMethods = AuthMethods();
 
   ScrollController _listScrollController = ScrollController();
 
@@ -50,7 +55,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   void initState() {
     super.initState();
-    _repository.getCurrentUser().then((user) {
+    _authMethods.getCurrentUser().then((user) {
       _currentUserId = user.uid;
 
       setState(() {
@@ -338,7 +343,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
       textFieldController.text = "";
 
-      _repository.addMessageToDb(_message, sender, widget.receiver);
+      _chatMethods.addMessageToDb(_message, sender, widget.receiver);
     }
 
     return Container(
@@ -443,7 +448,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void pickImage({@required ImageSource source}) async {
     File selectedImage = await Utils.pickImage(source: source);
-    _repository.uploadImage(
+    _storageMethods.uploadImage(
         image: selectedImage,
         receiverId: widget.receiver.uid,
         senderId: _currentUserId,

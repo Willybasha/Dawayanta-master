@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:math';
+import 'package:daawyenta/enum/user_state.dart';
 import 'package:flutter/services.dart';
 import 'package:image/image.dart' as Im;
 import 'package:flutter/material.dart';
@@ -10,6 +11,32 @@ import 'package:permission_handler/permission_handler.dart';
 
 
 class Utils {
+
+  static int stateToNum(UserState userState) {
+    switch (userState) {
+      case UserState.Offline:
+        return 0;
+
+      case UserState.Online:
+        return 1;
+
+      default:
+        return 2;
+    }
+  }
+
+  static UserState numToState(int number) {
+    switch (number) {
+      case 0:
+        return UserState.Offline;
+
+      case 1:
+        return UserState.Online;
+
+      default:
+        return UserState.Waiting;
+    }
+  }
   static String getUsername(String email) {
     return "live:${email.split('@')[0]}";
   }
@@ -104,4 +131,6 @@ class Permissions {
           details: null);
     }
   }
+
 }
+

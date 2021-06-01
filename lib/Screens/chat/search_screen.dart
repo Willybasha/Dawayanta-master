@@ -16,15 +16,12 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   FirebaseRepository _repository = FirebaseRepository();
-
   List<KUser> userList;
   String query = "";
   TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
     super.initState();
-
     _repository.getCurrentUser().then((FirebaseUser user) {
       _repository.fetchAllUsers(user).then((List<KUser> list) {
         setState(() {
