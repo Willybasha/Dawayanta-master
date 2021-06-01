@@ -98,9 +98,10 @@ class AuthMethods {
     return userList;
   }
 
-  Future<void> signOut() async {
+  Future<bool> signOut() async {
     await _googleSignIn.signOut();
-    return await _auth.signOut();
+    await _auth.signOut();
+    return true ;
   }
 
   void setUserState({@required String userId, @required UserState userState}) {
