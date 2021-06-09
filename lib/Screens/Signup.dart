@@ -1,14 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/Network/auth.dart';
 import 'package:daawyenta/Screens/Signup2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+
+import '../constants.dart';
 class signup extends StatefulWidget {
   @override
   _signupState createState() => _signupState();
 }
 class _signupState extends State<signup> {
+
+  Auth _auth = Auth()  ;
+
   var Username = TextEditingController();
   var Firstname = TextEditingController();
   var Secondname = TextEditingController();
@@ -270,13 +276,25 @@ class _signupState extends State<signup> {
                     FlatButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20)),
-                      onPressed: () {
+                      onPressed: () async {
                         if( _globalKey.currentState.validate()){
                           _globalKey.currentState.save();
                             if(Password.text == ConfirmPassword.text){
                             save(Username: Username.text,Firstname: Firstname.text,Secondname: Secondname.text,Password: Password.text,ConfirmPassword: ConfirmPassword.text,E_mail: E_mail.text,PhoneNumber: PhoneNumber.text);
                             read();
-                              Auth().signUp(E_mail.text, Password.text);
+                              _auth.signUp(E_mail.text, Password.text) ;
+                              setState(() {
+
+                              });
+                              var uid = await _auth.signUp(E_mail.text, Password.text) ;
+
+                              setState(() {
+
+                              });
+                            addToDBSecondData(uid) ;
+                            setState(() {
+
+                            });
                               Navigator.push(context, MaterialPageRoute(builder: (ctx)=>signup2()));
                             }
 
@@ -300,6 +318,14 @@ class _signupState extends State<signup> {
       ),
     );
 
+  }
+
+  Future<void> addToDBSecondData ( String currentUser) async{
+     await _auth.getCurrentUser() ;
+    Map<String , dynamic> data = {
+        "first_name":Username.text ,
+    };
+    Firestore.instance.collection(USERS_COLLECTION).document(currentUser).setData(data) ;
   }
 }
 

@@ -10,12 +10,12 @@ class Auth
 {
 final _auth=FirebaseAuth.instance;
 final googlesign = GoogleSignIn();
-Future signUp(String email,String password) async
+Future<String> signUp(String email,String password) async
   {
   try{
  final authresult=await _auth.createUserWithEmailAndPassword(email: email, password: password );
  FirebaseUser user =authresult.user;
- return authresult;}
+ return user.uid;}
  catch(e){
     switch(e.code){
       case 'ERRoR email already in use':
@@ -29,6 +29,7 @@ Future signIn(String email,String password) async
   try{
   final authresult = await _auth.signInWithEmailAndPassword(email: email, password: password);
   FirebaseUser user =authresult.user;
+
   return authresult;
   }
   catch(e){
@@ -38,7 +39,11 @@ Future signIn(String email,String password) async
     }
   }
 }
-
+Future<String> getCurrentUser() async {
+  FirebaseUser currentUser;
+  currentUser = await _auth.currentUser();
+  return currentUser.uid;
+}
 googlesignin()async{
 GoogleSignInAccount googleSignInAccount =await googlesign.signIn();
 if(googleSignInAccount != null)
