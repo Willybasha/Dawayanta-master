@@ -6,6 +6,7 @@ import 'package:daawyenta/utils/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 import '../constants.dart';
@@ -79,7 +80,8 @@ class _aftersignupState extends State<aftersignup> {
                         Container(
                             margin: EdgeInsets.only(top: 30, left: 30),
                             child: Image.asset(
-                              'assets/mini.jpg',
+                              "images/Mini.jpg",
+
                               height: 80,
                               width: 100,
                             )),
@@ -257,7 +259,7 @@ class _aftersignupState extends State<aftersignup> {
                               width: 130,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                    image: AssetImage('assets/covid2.jpg'),
+                                    image: AssetImage('images/covid2.jpg'),
                                     fit: BoxFit.cover),
                                 borderRadius: BorderRadius.circular(40),
                                 color: Color(0xfff1c6e2),
@@ -319,7 +321,8 @@ class _aftersignupState extends State<aftersignup> {
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(40),
                               image: DecorationImage(
-                                  image: AssetImage('assets/new1.jpg'),
+                                  image: AssetImage('images'
+                                      '/new1.jpg'),
                                   fit: BoxFit.cover)),
                           child: Center(
                               child: Text(

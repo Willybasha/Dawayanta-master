@@ -63,7 +63,7 @@ class _resState extends State<res> {
                       children:[
                         Container(
                             margin: EdgeInsets.only(top: 30,left: 30 ),
-                            child: Image.asset('assets/mini.jpg',height: 80,width: 100,)),
+                            child: Image.asset('images/Mini.jpg',height: 80,width: 100,)),
                         Container(
                             margin: EdgeInsets.only(top: 30 ),
                             child: Text('DAAWEYNTA',style: TextStyle(fontSize: 20,color: Colors.black),)),]

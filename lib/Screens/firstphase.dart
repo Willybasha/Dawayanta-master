@@ -66,7 +66,7 @@ class _firstphaseState extends State<firstphase> {
                   Row(
                    children:[
                      Container(
-                        child: Image.asset('assets/mini.jpg',height: 80,width: 100,)),
+                        child: Image.asset('images/Mini.jpg',height: 80,width: 100,)),
                   Container(
                       child: Text('DAAWEYNTA',style: TextStyle(fontSize: 20,color: Colors.black),)),]
                   ),

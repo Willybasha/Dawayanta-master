@@ -38,7 +38,7 @@ class _questartState extends State<questart> {
                     )),
                 Container(
                     margin: EdgeInsets.only(left: 10,top: 30 ),
-                    child: Image.asset('assets/mini.jpg',height: 80,width: 100,)),
+                    child: Image.asset('assets/Mini.jpg',height: 80,width: 100,)),
                 Container(
                     margin: EdgeInsets.only(top: 30 ),
                     child: Text('DAAWEYNTA',style: TextStyle(fontSize: 20,color: Colors.black),))
@@ -56,7 +56,7 @@ class _questartState extends State<questart> {
               Center(
                 child: Container(
                     margin: EdgeInsets.only(top: 130),
-                    child: Image.asset('assets/mini.jpg',width: 250,)),
+                    child: Image.asset('assets/Mini.jpg',width: 250,)),
               ),
               Container(
                   margin: EdgeInsets.only(top: 10,left: 10),

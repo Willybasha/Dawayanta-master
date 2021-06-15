@@ -79,7 +79,7 @@ class _signupState extends State<signup> {
                   Container(
                     margin: EdgeInsets.only(left: 100,top: 40),
                     height: 60,
-                    child: Image.asset('assets/mini.jpg'),),
+                    child: Image.asset('assets/Mini.jpg'),),
                   SizedBox(width: 10,),
                   Container(
                       margin: EdgeInsets.only(top: 50),
