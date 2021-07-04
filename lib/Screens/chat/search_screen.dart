@@ -1,6 +1,5 @@
-import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Network/auth_methods.dart';
 import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
-import 'package:daawyenta/Screens/chat/home_screen.dart';
 import 'package:daawyenta/Screens/chat/widgets/cutom_tile.dart';
 import 'package:daawyenta/models/user.dart';
 import 'package:daawyenta/utils/univesal_val.dart';
@@ -15,15 +14,18 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  FirebaseRepository _repository = FirebaseRepository();
+  final AuthMethods _authMethods = AuthMethods();
+
   List<KUser> userList;
   String query = "";
   TextEditingController searchController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
-    _repository.getCurrentUser().then((FirebaseUser user) {
-      _repository.fetchAllUsers(user).then((List<KUser> list) {
+
+    _authMethods.getCurrentUser().then((FirebaseUser user) {
+      _authMethods.fetchAllUsers(user).then((List<KUser> list) {
         setState(() {
           userList = list;
         });
@@ -36,7 +38,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
       leading: IconButton(
         icon: Icon(Icons.arrow_back, color: Colors.white),
-        onPressed: () => Navigator.pushReplacement(context, MaterialPageRoute(builder:(context)=> HomeScreen())),
+        onPressed: () => Navigator.pop(context),
       ),
       elevation: 0,
       bottom: PreferredSize(
@@ -82,8 +84,7 @@ class _SearchScreenState extends State<SearchScreen> {
   buildSuggestions(String query) {
     final List<KUser> suggestionList = query.isEmpty
     ? []
-    : userList != null
-    ? userList.where((KUser user) {
+    : userList.where((KUser user) {
     String _getUsername = user.username.toLowerCase();
     String _query = query.toLowerCase();
     String _getName = user.name.toLowerCase();
@@ -92,10 +93,8 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return (matchesUsername || matchesName);
 
-    // (User user) => (user.username.toLowerCase().contains(query.toLowerCase()) ||
-    //     (user.name.toLowerCase().contains(query.toLowerCase()))),
-    }).toList()
-        : [];
+
+    }).toList();
 
     return ListView.builder(
     itemCount: suggestionList.length,
@@ -150,5 +149,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-//WidgetsBinding.instance
-//                       .addPostFrameCallback((_) => searchController.clear());

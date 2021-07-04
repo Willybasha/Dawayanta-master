@@ -9,7 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class Auth
 {
 final _auth=FirebaseAuth.instance;
-final googlesign = GoogleSignIn();
+
 Future<String> signUp(String email,String password) async
   {
   try{
@@ -39,6 +39,7 @@ Future signIn(String email,String password) async
     }
   }
 }
+final googlesign = GoogleSignIn();
 Future<String> getCurrentUser() async {
   FirebaseUser currentUser;
   currentUser = await _auth.currentUser();

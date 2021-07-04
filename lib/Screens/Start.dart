@@ -33,7 +33,7 @@ class _startState extends State<start> {
           children:[ Column(
             children: [
               Container(
-                child: Image.asset('assets/Artboard 79.jpg'),
+                child: Image.asset('images/Artboard 79.jpg'),
               ),
               Form(
                 key: _globalKey,

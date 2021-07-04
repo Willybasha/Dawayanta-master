@@ -19,6 +19,7 @@ class AuthMethods {
   _firestore.collection(USERS_COLLECTION);
 
   Future<FirebaseUser> getCurrentUser() async {
+
     FirebaseUser currentUser;
     currentUser = await _auth.currentUser();
     return currentUser;

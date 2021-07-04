@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daawyenta/Network/chat_methods.dart';
 import 'package:daawyenta/Network/firebase_repository.dart';
+import 'package:daawyenta/Screens/aftersignup.dart';
 import 'package:daawyenta/Screens/call_screens/pickup/pickup_layout.dart';
 import 'package:daawyenta/Screens/chat/search_screen.dart';
 import 'package:daawyenta/Screens/chat/widgets/contant_veiw.dart';
@@ -20,10 +21,12 @@ class ChatListScreen extends StatelessWidget {
     return CustomAppBar(
       leading: IconButton(
         icon: Icon(
-          Icons.notifications,
+          Icons.arrow_back_ios_outlined,
           color: Colors.white,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>aftersignup()));
+        },
       ),
       title: UserCircle(),
       centerTitle: true,
@@ -34,7 +37,7 @@ class ChatListScreen extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen()));
+            Navigator.pushNamed(context, "/search_screen");
           },
         ),
         IconButton(

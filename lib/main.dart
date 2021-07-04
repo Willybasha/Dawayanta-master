@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 import 'Network/api.dart';
 import 'Screens/Start.dart';
 import 'Screens/aftersignup.dart';
+import 'Screens/chat/search_screen.dart';
 void main()async {
   WidgetsFlutterBinding.ensureInitialized();
   await FirebaseApp.instance;
@@ -45,6 +46,9 @@ class MyApp extends StatelessWidget {
               }
           },
         ) ,
+        routes: {
+          '/search_screen': (context) => SearchScreen(),
+        },
       ),
     );
   }
